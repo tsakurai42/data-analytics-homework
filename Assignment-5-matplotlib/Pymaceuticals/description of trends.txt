@@ -1,0 +1,8 @@
+Thoughts:
+
+ Based on the data, it is clear that two of the drugs have effective tumor response, those being Capomulin and Ramicane (see Tumor Response to Drug Treatment graph and the % tumor change bar graph). The tumors in the mice using the other drugs all increased in size, while these two drugs caused the tumors to shrink.
+ 
+ The metastatic spread for each drug was a bit more varied, but again the two drugs from before, Capomulin and Ramicane lead all the drugs in the trend of lowest amount of metastatic spread during the treatment length.
+ 
+ Looking at the survival rate of the mice with these tumors under each individual drug, the same two drugs Capomulin and Ramicane again appear as the top drugs in maintaining the highest survival rates.
+ 
