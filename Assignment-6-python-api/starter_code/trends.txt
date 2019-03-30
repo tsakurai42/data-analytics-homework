@@ -1,0 +1,11 @@
+Thoughts:
+
+As expected, a trend with regards to temperature vs latitude was readily apparent. Temperature incrases as you get closer to the equator and colder as you get further away from the equator (especially in the northern hemisphere). A few outliers in my data at ~-10 latitude, with a temperature near freezing).
+
+I did not see any real observable trend with regards to humidity vs latitude. Most cities seem to have a humidity 50% or above.
+
+I don't see a trend in terms of cloudiness as well. All latitudes have a very varied cloudiness. I did comment in the jupyter notebook my thoughts on the weird discrete values that cloudiness was outputting.
+
+I don't see too much of a trend when comparing wind speed to latitude either. The outlier high wind speeds are at the extreme latitudes.
+
+I know the assignment asked for 3 observable trends, but from the scatterplots, I don't see any trends for any statistic other than temperature when comparing to latitude.
