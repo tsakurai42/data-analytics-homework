@@ -1,0 +1,16 @@
+Thoughts:
+
+The scatterplot shows that generally there are more rides in urban areas, but the average fare is lower, and there are fewer rides in rural areas, but the average fares are higher.
+
+The pie plots show that most of the drivers (80.9%) are Urban while only 16.5% and 2.6% are Suburban and Rural, respectively.
+
+However, the percentage of Total Rides for Urban, Suburban, Rural are 68.4%, 26.3%, 5.3%, respectively and the percentage of Total Fares for Urban, Suburban, Rural are 62.7%, 30.5%, and 6.8%, respectively.
+
+In a quick table form:
+
+				Urban	Suburban	Rural
+% of drivers:	80.9	16.5		2.6
+% of rides		68.4	26.3		5.3
+% of fares		62.7	30.5		6.8
+
+This seems to indicate that while there are far more drivers in urban areas, they make up less of the number of rides and amount of fares, which means that per driver, they drive less and make less per ride. On the other hand, both suburban and rural areas have a greater percentage of rides and total fares than they do percentage of drivers, which indicates that averagely per driver, they make more per ride, with more rides.
