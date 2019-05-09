@@ -1,0 +1,50 @@
+body {
+    background-color: rgb(237, 237, 237);
+}
+
+.navbar {
+    padding: 0px 100px;
+    margin-bottom: 50px;
+}
+
+a.navbar-brand {
+    /*background-color: rgb(74, 170, 165);*/
+    padding: .635rem 1rem;
+    /*color: white !important;*/
+    font-weight: bold;
+}
+
+.footer {
+    position: fixed;
+    height: 50px;
+    line-height: 41px;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(102, 102, 102);
+    border-top: 6px solid #6f42c1;
+    font-size: 1.2em;
+    text-align: center
+}
+
+td img {
+    display: block;
+    width: 100%;
+}
+
+td.visgrid {
+    width: 750%;
+}
+
+div.infocontainer {
+    background-color: white;
+    padding: 2.5rem 1.5rem;
+    height: 100%;
+}
+div.graphcontainer {
+    background-color:white;
+    padding:2.5rem 1.5rem 0rem;
+}
+
+h2.text-info {
+    margin-bottom: 3rem;
+}
