@@ -15,63 +15,84 @@ var offset = 0.05 // used to bump the domain slightly so the dots don't land on 
 var chartHeight = svgHeight - margin.top - margin.bottom;
 var chartWidth = svgWidth - margin.left - margin.right;
 
-var toolTipTextX = 'Poverty %'
-var toolTipTextY = 'Lack Healthcare %'
+var toolTipTextX = 'Poverty %';
+var toolTipTextY = 'Lack Healthcare %';
+// set default start
 
 function createXScale(statedata, chosenX) {
-    var range = d3.extent(statedata.map(d=>d[chosenX]))[1]-d3.extent(statedata.map(d=>d[chosenX]))[0]
+    var range = d3.extent(statedata.map(d => d[chosenX]))[1] - d3.extent(statedata.map(d => d[chosenX]))[0];
     var xScale = d3.scaleLinear()
-        // .domain([0, d3.max(statedata.map(d => d[chosenX]))])
-        // .domain(d3.extent(statedata.map(d => d[chosenX])))
-        .domain([d3.min(statedata.map(d => d[chosenX]))-offset*range, d3.max(statedata.map(d => d[chosenX]))+offset*range])
+        .domain([d3.min(statedata.map(d => d[chosenX])) - offset * range, d3.max(statedata.map(d => d[chosenX])) + offset * range]) //offset to pull the lowest values off the axes
         .range([0, chartWidth]);
-    return xScale;
+
+    var chosenXArray = statedata.map(d => d[chosenX]);
+    if (chosenX == 'poverty') {     // poverty lower = higher rank. income higher = higher rank. age, eh whatever, i guess higher = higher rank?
+        var sortedXArray = chosenXArray.sort(function (a, b) { return a - b });
+    } else {
+        var sortedXArray = chosenXArray.sort(function (a, b) { return b - a });
+    }
+
+    var sortedXRanks = chosenXArray.map(v => sortedXArray.indexOf(v) + 1 ); // for each value, finds the FIRST place it appears in the sorted version. This means ties all take the top value, which is how it should be :)
+    
+    var xRank = {};
+    chosenXArray.forEach((d, i) => {
+        xRank[d] = sortedXRanks[i]; // i'm sure there's a better way, but just send it back as a dictionary so I can use key:value pairs to look up the rank later.
+    })
+
+    var xStuff = [xScale, xRank];  // not the best variable name...
+    return xStuff;
 }
 
 function createYScale(statedata, chosenY) {
-    var range = d3.extent(statedata.map(d=>d[chosenY]))[1]-d3.extent(statedata.map(d=>d[chosenY]))[0]
+    var range = d3.extent(statedata.map(d => d[chosenY]))[1] - d3.extent(statedata.map(d => d[chosenY]))[0];
     var yScale = d3.scaleLinear()
-        // .domain([0, d3.max(statedata.map(d => d[chosenY]))])
-        // .domain(d3.extent(statedata.map(d => d[chosenY])))
-        .domain([d3.min(statedata.map(d => d[chosenY]))-offset*range, d3.max(statedata.map(d => d[chosenY]))+offset*range])
+        .domain([d3.min(statedata.map(d => d[chosenY])) - offset * range, d3.max(statedata.map(d => d[chosenY])) + offset * range])
         .range([chartHeight, 0]);
-    console.log(chosenY, d3.max(statedata.map(d => d[chosenY])))
-    return yScale;
+    var chosenYArray = statedata.map(d => d[chosenY]);
+    var sortedYArray = chosenYArray.sort(function (a, b) { return a - b });  // for all lack healthcare, obese, smokers, higher % = worse rank.
+    var sortedYRanks = chosenYArray.map(v => sortedYArray.indexOf(v) + 1 );
+    var yRank = {};
+    chosenYArray.forEach((d, i) => {
+        yRank[d] = sortedYRanks[i];
+    })
+    var yStuff = [yScale, yRank];
+    return yStuff;
 }
 
 function moveCircles(circlesG, whichaxis, Scale, Cat) {
+    // one function to move the circles, regardless of which axis is changed.
     if (whichaxis == 'x') {
         circlesG.transition()
             .duration(animationduration)
             .attr('cx', d => Scale(d[Cat]))
-            .attr('data-x-val', d => d[Cat])
+            .attr('data-x-val', d => d[Cat]); // still just updating a special variable that stores the value to make it scrape-able i guess? No real reason otherwise
     } else if (whichaxis == 'y') {
         circlesG.transition()
             .duration(animationduration)
             .attr('cy', d => Scale(d[Cat]))
-            .attr('data-y-val', d => d[Cat])
+            .attr('data-y-val', d => d[Cat]);
     }
-    return circlesG
+    return circlesG;
 }
 
 function moveText(textG, whichaxis, Scale, Cat) {
     if (whichaxis == 'x') {
         textG.transition()
             .duration(animationduration)
-            .attr('x', d => Scale(d[Cat]))
+            .attr('x', d => Scale(d[Cat]));
     } else if (whichaxis == 'y') {
         textG.transition()
             .duration(animationduration)
-            .attr('y', d => Scale(d[Cat]))
+            .attr('y', d => Scale(d[Cat]));
     }
-    return textG
+    return textG;
 }
 
 function ColorChange(circlesG, Scale, Cat) {
     circlesG.transition()
         .duration(animationduration)
-        .attr("fill", d => d3.interpolateInferno(Scale(d[Cat]) / chartHeight))
-    return circlesG
+        .attr("fill", d => d3.interpolateInferno(Scale(d[Cat]) / chartHeight)); // recolor based on current category (function only called for Y axis categories)
+    return circlesG;
 }
 
 d3.csv('../assets/data/data.csv').then(statedata => {
@@ -79,7 +100,7 @@ d3.csv('../assets/data/data.csv').then(statedata => {
     statedata.forEach(d => d.poverty = +d.poverty);
     statedata.forEach(d => d.age = +d.age);
     statedata.forEach(d => d.income = +d.income);
-    
+
     statedata.forEach(d => d.healthcare = +d.healthcare);
     statedata.forEach(d => d.obesity = +d.obesity);
     statedata.forEach(d => d.smokes = +d.smokes);
@@ -88,9 +109,13 @@ d3.csv('../assets/data/data.csv').then(statedata => {
     var currentX = 'poverty';
     var currentY = 'healthcare';
 
-    var xScale = createXScale(statedata,currentX);
-    var yScale = createYScale(statedata,currentY);
-    
+    var xStuff = createXScale(statedata, currentX);
+    var xScale = xStuff[0];
+    var xRank = xStuff[1];
+    var yStuff = createYScale(statedata, currentY);
+    var yScale = yStuff[0]
+    var yRank = yStuff[1]
+
     var yAxis = d3.axisLeft(yScale);
     var xAxis = d3.axisBottom(xScale);
 
@@ -162,7 +187,6 @@ d3.csv('../assets/data/data.csv').then(statedata => {
         .attr("transform", `translate(0, ${chartHeight})`)
         .call(xAxis);
 
-
     var colorResetG = $chartg.append("g")
         .attr("transform", `translate(${50}, ${svgHeight - 75})`);
 
@@ -179,11 +203,11 @@ d3.csv('../assets/data/data.csv').then(statedata => {
     var tool_tip = d3.tip()
         .attr("class", "d3-tip")
         .offset([-8, 0])
-        .html(d => `${d.state}<br>Poverty: ${d.poverty}%<br>No HealthCare: ${d.healthcare}%`);
+        .html(d => `${d.state}<br>Poverty: ${d.poverty}% (Rank: ${xRank[d.poverty]})<br>No HealthCare: ${d.healthcare}% (Rank: ${yRank[d.healthcare]})`);
 
     $chartg.call(tool_tip);
 
-    var circlesG = $chartg.selectAll('circle')
+    var circlesG = $chartg.selectAll('circle') //initializing circles for the first time
         .data(statedata)
         .enter()
         .append('circle')
@@ -195,6 +219,8 @@ d3.csv('../assets/data/data.csv').then(statedata => {
         .attr("fill", d => d3.interpolateInferno(yScale(d.healthcare) / chartHeight))
         .attr('opacity', '0.75')
         .attr('data-state', d => d.abbr)
+        .attr('data-x-val', d => d.poverty) // the values being stored and updated.
+        .attr('data-y-val', d => d.healthcare)
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide);
 
@@ -216,11 +242,13 @@ d3.csv('../assets/data/data.csv').then(statedata => {
         .on('click', function () {
             var clickedvalue = d3.select(this).attr("value");
             if (clickedvalue != currentX) {
-                xScale = createXScale(statedata, clickedvalue);
+                xStuff = createXScale(statedata, clickedvalue);
+                xScale = xStuff[0];
+                xRank = xStuff[1];
                 xAxisG.transition().duration(animationduration).call(d3.axisBottom(xScale));
                 currentX = clickedvalue;
-                circlesG = moveCircles(circlesG, 'x', xScale, currentX)
-                textG = moveText(textG, 'x', xScale, currentX)
+                circlesG = moveCircles(circlesG, 'x', xScale, currentX);
+                textG = moveText(textG, 'x', xScale, currentX);
                 $xAxisLabelG.selectAll('text').classed("inactive", true);
                 $xAxisLabelG.selectAll('text').classed("active", false);
                 $xAxisLabelG.select(`#${clickedvalue}`).classed("active", true);
@@ -234,7 +262,7 @@ d3.csv('../assets/data/data.csv').then(statedata => {
                     toolTipTextX = "Median Household Income";
                 }
                 tool_tip = tool_tip
-                    .html(d => `${d.state}<br>${toolTipTextX}: ${d[currentX]}<br>${toolTipTextY}: ${d[currentY]}`);
+                    .html(d => `${d.state}<br>${toolTipTextX}: ${d[currentX]} (Rank: ${xRank[d[currentX]]})<br>${toolTipTextY}: ${d[currentY]} (Rank: ${yRank[d[currentY]]})`);
             }
         })
 
@@ -242,7 +270,9 @@ d3.csv('../assets/data/data.csv').then(statedata => {
         .on('click', function () {
             var clickedvalue = d3.select(this).attr("value");
             if (clickedvalue != currentY) {
-                yScale = createYScale(statedata, clickedvalue);
+                yStuff = createYScale(statedata, clickedvalue);
+                var yScale = yStuff[0];
+                var yRank = yStuff[1];
                 yAxisG.transition().duration(animationduration).call(d3.axisLeft(yScale));
                 currentY = clickedvalue;
                 circlesG = moveCircles(circlesG, 'y', yScale, currentY);
@@ -259,14 +289,14 @@ d3.csv('../assets/data/data.csv').then(statedata => {
                 } else if (currentY == "obesity") {
                     toolTipTextY = "Obesity %";
                 }
-                
+
                 tool_tip = tool_tip
-                    .html(d => `${d.state}<br>${toolTipTextX}: ${d[currentX]}<br>${toolTipTextY}: ${d[currentY]}`);
+                    .html(d => `${d.state}<br>${toolTipTextX}: ${d[currentX]} (Rank: ${xRank[d[currentX]]})<br>${toolTipTextY}: ${d[currentY]} (Rank: ${yRank[d[currentY]]})`);
             }
         })
 
     $colorReset
         .on('click', function () {
-            circlesG = ColorChange(circlesG, yScale, currentY)
+            circlesG = ColorChange(circlesG, yScale, currentY);
         })
 })
