@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <select id="top100players"
+            onchange="changePlayer(this.value)">
+
+    </select>
+    <div id="fieldRatings">
+        <div id="CAM"></div>
+        <div id="CB"></div>
+        <div id="CDM"></div>
+        <div id="CF"></div>
+        <div id="CM"></div>
+        <div id="LB"></div>
+        <div id="LF"></div>
+        <div id="LM"></div>
+        <div id="LW"></div>
+        <div id="LWB"></div>
+        <div id="Name"></div>
+        <div id="RB"></div>
+        <div id="RF"></div>
+        <div id="RM"></div>
+        <div id="RW"></div>
+        <div id="RWB"></div>
+        <div id="ST"></div>
+    </div>
+    <div id="field">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             height="684"
+             width="452"
+             xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <rect opacity=".7"
+                  height="684"
+                  width="452"
+                  fill="#0b0"
+                  ry="6" />
+
+            <rect opacity='1'
+                  width="452"
+                  height="122"
+                  y="0"
+                  fill="red" />
+            <rect opacity='1'
+                  width="452"
+                  height="110"
+                  y="122"
+                  fill="white" />
+            <rect opacity='1'
+                  width="452"
+                  height="54"
+                  y="232"
+                  fill="blue" />
+            <rect opacity='1'
+                  width="452"
+                  height="112"
+                  y="286"
+                  fill="pink" />
+            <rect opacity='1'
+                  width="452"
+                  height="54"
+                  y="398"
+                  fill="purple" />
+            <rect opacity='1'
+                  width="452"
+                  height="110"
+                  y="452"
+                  fill="black" />
+            <rect opacity='1'
+                  width="452"
+                  height="122"
+                  y="562"
+                  fill="orange" />
+            <g stroke="#efe"
+               stroke-width="3"
+               fill="none">
+                <path d="m11.22 22.62v638.8h429.6v-638.8z" />
+                <path d="m11.26 342h429.4" />
+                <circle cy="342"
+                        cx="226"
+                        r="54.8" />
+                <circle cy="342"
+                        cx="226"
+                        r="2" />
+                <g id="a">
+                    <path
+                    d="m 228,90 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z M 442.12,30.043 c -4.9,0 -8.8,-4 -8.8,-8.9 m -262.9,1.2 v 34.4 h 111.2 v -34.4 m 65.5,-0.003 v 99.63 h -242.2 l 0.2,-99.63 m 76.1,99.63 a 54.91,54.91 0 0 0 89.6,0 M 9.9,30.07 c 4.85,0 8.82,-4 8.82,-8.9" />
+                    <circle cy="90"
+                            cx="226"
+                            r="2" />
+                </g>
+                <use xlink:href="#a"
+                     transform="scale(1,-1)"
+                     y="-684" />
+            </g>
+        </svg>
+    </div>
+    <script src="static/js/chroma.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="static/js/positionchart.js"></script>
+</body>
+
+</html>

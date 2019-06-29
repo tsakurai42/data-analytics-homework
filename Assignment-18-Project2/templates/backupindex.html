@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="container" >
+        <div class="row bg-primary">
+            <div class="col-12 text-center" style="padding:2rem">
+                <h1 class="text-light">Mission to Mars</h2>
+                    <a href='scrape' class="btn btn-primary" role="button">Click to Scrape</a>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:1rem;margin-top:1rem">
+            <div class="col-12">
+                <span>
+                    <h2>Latest news:</h2>
+                    <h3><a href='{{marsvar.link}}'>{{ marsvar.title }}</a></h3>
+                </span>
+                <span>{{marsvar.text}}</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:1rem">
+            <div class="col-md-8 col-xs-12">
+                <h3>Featured Mars Image:</h3>
+                <img src='{{ marsvar.jpl_image_url }}' class="img-fluid">
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div class="row" style="margin-bottom:1rem">
+                    <div style="border:1px solid rgb(150,150,150);padding:1em;background-color:rgb(222,222,222)">
+                        <h3>Current Mars Weather:</h3>
+                        {{ marsvar.mars_weather}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div><h3>Mars Facts:</h3>
+                    {{ marsvar.mars_facts_table|safe}}
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <img src='{{ marsvar.hemisphere_images[0].url }}' class="img-fluid">
+                <h3>{{ marsvar.hemisphere_images[0].title}}</h3>
+            </div>
+
+            <div class="col-5">
+                <img src='{{ marsvar.hemisphere_images[1].url }}' class="img-fluid">
+                <h3>{{ marsvar.hemisphere_images[1].title}}</h3>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <img src='{{ marsvar.hemisphere_images[2].url }}' class="img-fluid">
+                <h3>{{ marsvar.hemisphere_images[2].title}}</h3>
+            </div>
+            <div class="col-5">
+                <img src='{{ marsvar.hemisphere_images[3].url }}' class="img-fluid">
+                <h3>{{ marsvar.hemisphere_images[3].title}}</h3>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="static/js/positionchart.js"></script>
+</body>
+
+</html>
