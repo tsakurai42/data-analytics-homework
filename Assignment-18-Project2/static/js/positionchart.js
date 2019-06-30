@@ -11,35 +11,26 @@ d3.json(playerListURL).then(data => {
         .attr('value', d => d.ID)
 })
 
+changePlayer(158023); // initialize field with Lionel Messi
+
+// ratings in this game are given as ##+#, due to something called a chemistry bonus. Map is utilized, by default USING the chem bonus
+// so need to split the string on the +, then adding the values.
 function splitRating(ratingString) {
     rating = ratingString.split("+")
     return parseInt(rating[0])+parseInt(rating[1])
 }
+
 function changePlayer(playerID) {
-    console.log(playerID)
-    playerPosRatingURL = `/player_position_rating/${playerID}`
-    d3.json(playerPosRatingURL).then(data => {
-        console.log(data)
-        fieldRatings = d3.select('#fieldRatings')
-        // fieldRatings.html(null)
-        colorScale = chroma.scale(['red','yellow','green']).domain([0,100])
-        // d3.select('#LW')
-        //     .text(data.LW)
-        //     .style('background-color',colorScale(splitRating(data.LW)))
-        // d3.select("#ST")
-        //     .text(data.ST)
-        //     .style('background-color',colorScale(splitRating(data.ST)))
-        // d3.select("#RW")
-        //     .text(data.RW)
-        //     .style('background-color',colorScale(splitRating(data.RW)))
-        console.log(Object.entries(data))
-        fieldRatings.html(null);
-        fieldRatings.selectAll('div')
-            .data(Object.entries(data))
-            .enter()
-            .append('div')
-            .attr('id',d=>d[0])
-            .text(d=>`${d[0]}: ${d[1]}`)
-            .style('background-color',d=>colorScale(splitRating(d[1])))
+    // console.log(playerID)
+    colorScale = chroma.scale(['red','yellow','green']).domain([0,100])
+    d3.json(`/player_position_rating/${playerID}`).then(data => {
+        // fieldRatings = d3.select('#fieldRatings')
+        // console.log(Object.entries(data))
+        for (each_zone of Object.entries(data)) {
+            d3.select(`#${each_zone[0]}`)  //fill color by color scale 0-100
+                .attr('fill',colorScale(splitRating(each_zone[1])))
+            d3.select(`#${each_zone[0]}-t`)   // write rating score
+                .text(splitRating(each_zone[1]))
+        }
     })
 }
