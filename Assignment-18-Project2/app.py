@@ -29,11 +29,19 @@ def index():
 
 @app.route('/top_100_players')
 def list100():
-    player_list = fifa_data.find({'Position':{'$not': {'$eq':'GK'}}},{'Name':1,'ID':1,'_id':0}).limit(100)
+    player_list = fifa_data.find({'Position':{'$not': {'$eq':'GK'}}},{'Name':1,'ID':1,'_id':0,'LW':1,'ST':1,'RW':1,'LF':1,'CF':1,'RF':1,'CAM':1,'LM':1,'CM':1,'RM':1,'CDM':1,'LWB':1,'RWB':1,'LB':1,'CB':1,'RB':1}).limit(100)
+    player_id_list = {}
     players = []
-    for player in player_list:
+    for (i, player) in enumerate(player_list):
+        player_id_list[player['ID']] = i
         players.append(player)
-    return jsonify(players)
+    #pprint(players)
+    # player_id_list.append(player)
+    # pprint(player_id_list)
+    returnplayers = {"id_list":player_id_list, "players":players}
+    pprint(returnplayers)
+    # return jsonify(players)
+    return jsonify(returnplayers)
 
 @app.route('/player_position_rating/<player_id>')
 def playerstats(player_id):
