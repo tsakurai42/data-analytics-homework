@@ -1,0 +1,11 @@
+#field tspan {
+    font-family: sans-serif;
+    font-size:24px;
+    text-anchor: middle
+}
+
+#field rect {
+    opacity:1;
+    stroke-width:2;
+    stroke:black
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/style.css') }}">
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+      </script>
+</head>
+
+<body>
+      <div class="form-group col-3">
+            <label for="top100players">Select Player:</label>
+            <select class="form-control" id="top100players"></select>
+      </div>
+
+      <div id="field">
+            <svg height="684" width="452">
+                  <rect width="151" height="122" y="0" id="LW" />
+                  <text y="61">
+                        <tspan x="16.7%">LW</tspan>
+                        <tspan x="16.7%" dy="20" id="LW-t">99</tspan>
+                  </text>
+                  <rect width="150" height="122" x="151" y="0" id="ST" />
+                  <text y="61">
+                        <tspan x="50%">ST</tspan>
+                        <tspan x="50%" dy="20" id="ST-t">99</tspan>
+                  </text>
+                  <rect width="151" height="122" x="301" y="0" id="RW" />
+                  <text y="61">
+                        <tspan x="83.3%">RW</tspan>
+                        <tspan x="83.3%" dy="20" id="RW-t">99</tspan>
+                  </text>
+
+                  <rect width="151" height="110" y="122" id="LF" />
+                  <text y="177">
+                        <tspan x="16.7%">LF</tspan>
+                        <tspan x="16.7%" dy="20" id="LF-t">99</tspan>
+                  </text>
+                  <rect width="150" height="110" x="151" y="122" id="CF" />
+                  <text y="177">
+                        <tspan x="50%">CF</tspan>
+                        <tspan x="50%" dy="20" id="CF-t">99</tspan>
+                  </text>
+                  <rect width="151" height="110" x="301" y="122" id="RF" />
+                  <text y="177">
+                        <tspan x="83.3%">RF</tspan>
+                        <tspan x="83.3%" dy="20" id="RF-t">99</tspan>
+                  </text>
+
+                  <rect width="452" height="54" y="232" id="CAM" />
+                  <text y="259">
+                        <tspan x="50%">CAM</tspan>
+                        <tspan x="50%" dy="20" id="CAM-t">99</tspan>
+                  </text>
+
+                  <rect width="151" height="112" y="286" id="LM" />
+                  <text y="342">
+                        <tspan x="16.7%">LM</tspan>
+                        <tspan x="16.7%" dy="20" id="LM-t">99</tspan>
+                  </text>
+                  <rect width="150" height="112" x="151" y="286" id="CM" />
+                  <text y="342">
+                        <tspan x="50%">CM</tspan>
+                        <tspan x="50%" dy="20" id="CM-t">99</tspan>
+                  </text>
+                  <rect width="151" height="112" x="301" y="286" id="RM" />
+                  <text y="342">
+                        <tspan x="83.3%">RM</tspan>
+                        <tspan x="83.3%" dy="20" id="RM-t">99</tspan>
+                  </text>
+
+                  <rect width="452" height="54" y="398" id="CDM" />
+                  <text y="425">
+                        <tspan x="50%">CDM</tspan>
+                        <tspan x="50%" dy="20" id="CDM-t">99</tspan>
+                  </text>
+
+                  <rect width="226" height="110" y="452" id="LWB" />
+                  <text y="507">
+                        <tspan x="25%">LWB</tspan>
+                        <tspan x="25%" dy="20" id="LWB-t">99</tspan>
+                  </text>
+                  <rect width="226" height="110" x="226" y="452" id="RWB" />
+                  <text y="507">
+                        <tspan x="75%">RWB</tspan>
+                        <tspan x="75%" dy="20" id="RWB-t">99</tspan>
+                  </text>
+
+                  <rect width="151" height="122" y="562" id="LB" />
+                  <text y="623">
+                        <tspan x="16.7%">LB</tspan>
+                        <tspan x="16.7%" dy="20" id="LB-t">99</tspan>
+                  </text>
+                  <rect width="150" height="122" x="151" y="562" id="CB" />
+                  <text y="623">
+                        <tspan x="50%">CB</tspan>
+                        <tspan x="50%" dy="20" id="CB-t">99</tspan>
+                  </text>
+                  <rect width="151" height="122" x="301" y="562" id="RB" />
+                  <text y="623">
+                        <tspan x="83.3%">RB</tspan>
+                        <tspan x="83.3%" dy="20" id="RB-t">99</tspan>
+                  </text>
+
+                  <g stroke="#efe" stroke-width="3" fill="none" opacity="0.6">
+                        <path d="m11.22 22.62v638.8h429.6v-638.8z" />
+                        <path d="m11.26 342h429.4" />
+                        <circle cy="342" cx="226" r="54.8" />
+                        <circle cy="342" cx="226" r="2" />
+                        <g id="a">
+                              <path
+                                    d="m 228,90 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z M 442.12,30.043 c -4.9,0 -8.8,-4 -8.8,-8.9 m -262.9,1.2 v 34.4 h 111.2 v -34.4 m 65.5,-0.003 v 99.63 h -242.2 l 0.2,-99.63 m 76.1,99.63 a 54.91,54.91 0 0 0 89.6,0 M 9.9,30.07 c 4.85,0 8.82,-4 8.82,-8.9" />
+                              <circle cy="90" cx="226" r="2" />
+                        </g>
+                        <use xlink:href="#a" transform="scale(1,-1)" y="-684" />
+                  </g>
+            </svg>
+      </div>
+      <script src="static/js/chroma.js"></script>
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="static/js/positionchart.js"></script>
+</body>
+
+</html>

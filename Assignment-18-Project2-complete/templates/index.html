@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+    <title>World Soccer info</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/d3style.css') }}">
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+          integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+          crossorigin="" />
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+            integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+            crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+</head>
+
+<body>
+
+    <div class="container"
+         id="container">
+        <div class="row">
+            <div class="jumbotron text-center"
+                 id="jumbo">
+                <div id="jumbo_text">
+                    <h1>Futbol Data Central</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="main_info">
+            <h2>Where do the world's top men's teams and players come from?</h2>
+            <strong>With the women's World Cup in full swing along with regional men's cups being played, we recalled 
+                the U.S. women's team consistently doing well while the U.S. men's team usually performing poorly in the World Cup. This led us to ask a few
+                questions, primarily, "Who are the world's top men's team players and where do they come from?"</strong>
+            <br>
+            <br>
+            <p style="text-decoration-line: underline;">Project Contibutors</p>
+            <ul>
+                <li>Matthew Stewart: Top Players bar chart and server side setup contribution</li>
+                <li>Tatsuya Sakurai: Field rating chart and server side setup contribution</li>
+                <li>Tai Johnson: Server side setup and html page</li>
+                <li>Seth Oliver: Team rating chart and server side contribution</li>
+            </ul>
+            <a href="https://www.kaggle.com/karangadiya/fifa19"
+               target="_blank">Link to our Dataset</a>
+            <P>The dataset we found is from the FIFA video game 2019 edition, which is based on data from the 2018 season. We naturally asked the following question
+                before proceeding, "How does FIFA calculate its player data when creating its games compared to the stats and facts about
+                the actual players, and is it accurately reflective to the real world enough in order for us make a good
+                comparison?"
+                <a href="https://datamakespossible.westerndigital.com/meet-data-master-ea-sports-fifa/"
+                   target="_blank">Here</a> is a
+                link explaining in better detail how EA comes up with the data they use for their FIFA games.</p>
+        </div>
+        <h4 style="text-align:center; text-decoration-line: underline;">
+            Top Countries by Average Rating</h4>
+        <div class="row maprow">
+            <div class="col-md-12 mapcolumn">
+                <div id="map">
+                    <!-- Geomap goes here from leaflet -->
+                </div>
+            </div>
+        </div>
+        <div class="row svgRow">
+            <div class="col-md-6" style="box-shadow: 0 10px 10px grey;">
+                <h4 style="text-align:center; text-decoration-line: underline;">
+                    Player Positional Strengths</h4>
+                <div class="form-group col-3">
+                    <label for="top100players">Select Player:</label>
+                    <select class="form-control"
+                            id="top100players"></select>
+                </div>
+
+                <div id="field">
+                    <svg height="684"
+                         width="452">
+                        <rect width="151"
+                              height="122"
+                              y="0"
+                              id="LW" />
+                        <text y="61">
+                            <tspan x="16.7%">LW</tspan>
+                            <tspan x="16.7%"
+                                   dy="20"
+                                   id="LW-t">99</tspan>
+                        </text>
+                        <rect width="150"
+                              height="122"
+                              x="151"
+                              y="0"
+                              id="ST" />
+                        <text y="61">
+                            <tspan x="50%">ST</tspan>
+                            <tspan x="50%"
+                                   dy="20"
+                                   id="ST-t">99</tspan>
+                        </text>
+                        <rect width="151"
+                              height="122"
+                              x="301"
+                              y="0"
+                              id="RW" />
+                        <text y="61">
+                            <tspan x="83.3%">RW</tspan>
+                            <tspan x="83.3%"
+                                   dy="20"
+                                   id="RW-t">99</tspan>
+                        </text>
+
+                        <rect width="151"
+                              height="110"
+                              y="122"
+                              id="LF" />
+                        <text y="177">
+                            <tspan x="16.7%">LF</tspan>
+                            <tspan x="16.7%"
+                                   dy="20"
+                                   id="LF-t">99</tspan>
+                        </text>
+                        <rect width="150"
+                              height="110"
+                              x="151"
+                              y="122"
+                              id="CF" />
+                        <text y="177">
+                            <tspan x="50%">CF</tspan>
+                            <tspan x="50%"
+                                   dy="20"
+                                   id="CF-t">99</tspan>
+                        </text>
+                        <rect width="151"
+                              height="110"
+                              x="301"
+                              y="122"
+                              id="RF" />
+                        <text y="177">
+                            <tspan x="83.3%">RF</tspan>
+                            <tspan x="83.3%"
+                                   dy="20"
+                                   id="RF-t">99</tspan>
+                        </text>
+
+                        <rect width="452"
+                              height="54"
+                              y="232"
+                              id="CAM" />
+                        <text y="259">
+                            <tspan x="50%">CAM</tspan>
+                            <tspan x="50%"
+                                   dy="20"
+                                   id="CAM-t">99</tspan>
+                        </text>
+
+                        <rect width="151"
+                              height="112"
+                              y="286"
+                              id="LM" />
+                        <text y="342">
+                            <tspan x="16.7%">LM</tspan>
+                            <tspan x="16.7%"
+                                   dy="20"
+                                   id="LM-t">99</tspan>
+                        </text>
+                        <rect width="150"
+                              height="112"
+                              x="151"
+                              y="286"
+                              id="CM" />
+                        <text y="342">
+                            <tspan x="50%">CM</tspan>
+                            <tspan x="50%"
+                                   dy="20"
+                                   id="CM-t">99</tspan>
+                        </text>
+                        <rect width="151"
+                              height="112"
+                              x="301"
+                              y="286"
+                              id="RM" />
+                        <text y="342">
+                            <tspan x="83.3%">RM</tspan>
+                            <tspan x="83.3%"
+                                   dy="20"
+                                   id="RM-t">99</tspan>
+                        </text>
+
+                        <rect width="452"
+                              height="54"
+                              y="398"
+                              id="CDM" />
+                        <text y="425">
+                            <tspan x="50%">CDM</tspan>
+                            <tspan x="50%"
+                                   dy="20"
+                                   id="CDM-t">99</tspan>
+                        </text>
+
+                        <rect width="226"
+                              height="110"
+                              y="452"
+                              id="LWB" />
+                        <text y="507">
+                            <tspan x="25%">LWB</tspan>
+                            <tspan x="25%"
+                                   dy="20"
+                                   id="LWB-t">99</tspan>
+                        </text>
+                        <rect width="226"
+                              height="110"
+                              x="226"
+                              y="452"
+                              id="RWB" />
+                        <text y="507">
+                            <tspan x="75%">RWB</tspan>
+                            <tspan x="75%"
+                                   dy="20"
+                                   id="RWB-t">99</tspan>
+                        </text>
+
+                        <rect width="151"
+                              height="122"
+                              y="562"
+                              id="LB" />
+                        <text y="623">
+                            <tspan x="16.7%">LB</tspan>
+                            <tspan x="16.7%"
+                                   dy="20"
+                                   id="LB-t">99</tspan>
+                        </text>
+                        <rect width="150"
+                              height="122"
+                              x="151"
+                              y="562"
+                              id="CB" />
+                        <text y="623">
+                            <tspan x="50%">CB</tspan>
+                            <tspan x="50%"
+                                   dy="20"
+                                   id="CB-t">99</tspan>
+                        </text>
+                        <rect width="151"
+                              height="122"
+                              x="301"
+                              y="562"
+                              id="RB" />
+                        <text y="623">
+                            <tspan x="83.3%">RB</tspan>
+                            <tspan x="83.3%"
+                                   dy="20"
+                                   id="RB-t">99</tspan>
+                        </text>
+
+                        <g stroke="#efe"
+                           stroke-width="3"
+                           fill="none"
+                           opacity="0.6">
+                            <path d="m11.22 22.62v638.8h429.6v-638.8z" />
+                            <path d="m11.26 342h429.4" />
+                            <circle cy="342"
+                                    cx="226"
+                                    r="54.8" />
+                            <circle cy="342"
+                                    cx="226"
+                                    r="2" />
+                            <g id="a">
+                                <path
+                                      d="m 228,90 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z M 442.12,30.043 c -4.9,0 -8.8,-4 -8.8,-8.9 m -262.9,1.2 v 34.4 h 111.2 v -34.4 m 65.5,-0.003 v 99.63 h -242.2 l 0.2,-99.63 m 76.1,99.63 a 54.91,54.91 0 0 0 89.6,0 M 9.9,30.07 c 4.85,0 8.82,-4 8.82,-8.9" />
+                                <circle cy="90"
+                                        cx="226"
+                                        r="2" />
+                            </g>
+                            <use xlink:href="#a"
+                                 transform="scale(1,-1)"
+                                 y="-684" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="col-md-6 barcolumn">
+                <div id="bar">
+                    <!-- We append bar chart here. -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chroma.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+</body>
+
+</html>
